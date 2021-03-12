@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="244299986178-16s1c4qbq6k1j16p083ssmfvoiqr07rf.apps.googleusercontent.com">
+    <title>Document</title>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/progressbar.js/1.0.0/progressbar.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,300,600,800,900" rel="stylesheet" type="text/css">
+</head>
+<link rel="stylesheet" href="profile.css">
+
+<body>
+ <div class="masterwrap">
+
+  
+  
+  <a href="/logout" class="button">Sign out</a>
+
+  <div class="sidebar card">
+    <div class="flexwraprow center">
+
+      
+      <div id="data"><%=doc1%></div>
+      <img id="userpicture"src=<%= userpicture %> >
+      <div id="user"><%=loginuser%></div>
+      
+
+      
+    </div>
+  
+  
+    
+    <div class="flexwraprow">
+      <button class="button" onclick="logpage()">log my hours </button>
+      <button class="button" onclick="logpage()">Generate a monthly report </button>
+      <button class="button" onclick="logpage()">Mark my avalabilities </button>
+
+    </div>
+
+
+  </div>
+
+  
+ 
+
+  <div class=" hourprogress card flexwrapcolumn">
+    <p>Your Hours this month </p>
+    <div id="container"></div>
+    <div id="totalhour"></div>
+
+  </div>
+
+
+ 
+
+
+  
+  <div class="progress" id="progress"></div>
+   
+  
+  <div class="chart-container card">
+    <canvas id="myChart"></canvas>
+
+    </div>
+
+  
+
+  
+  <div class="card history">
+    <ul id="loggedlist" >
+      <h3>this is my logged history</h3>
+
+
+    </ul>
+  </div>
+  
+  
+
+
+ </div>
+   
+   
+
+    
+</body>
+<script>
+
+
+
+// Assuming we have an empty <div id="container"></div> in
+// HTML
+
+
+  
+
+var info = document.getElementById("data").innerHTML;
+var user = document.getElementById("user").innerText;
+var finaldata= JSON.parse(info)
+var milano= finaldata.Milano
+var serrento= finaldata.Serrento
+var toscano= finaldata.toscano
+var totalhour= milano+serrento+toscano
+var totalhourconverted=totalhour/30
+var totalhourconvertedstring = `${Math.ceil(totalhour/30*100)}%`
+var log = finaldata.loggeddetails
+
+var totalhours= document.getElementById("totalhour");
+
+
+totalhours.innerText=`${totalhour}/30`
+
+var bar = new ProgressBar.Circle(container, {
+  color: '#aaa',
+  // This has to be the same size as the maximum width to
+  // prevent clipping
+  strokeWidth: 9,
+  trailWidth: 10,
+  easing: 'easeInOut',
+  duration: 1400,
+  svgStyle: null,
+  text: {
+    autoStyleContainer: false
+  },
+  from: { color: '#aaa', width: 1 },
+  to: { color: '#333', width: 4 },
+  // Set default step function for all animate calls
+  step: function(state, circle) {
+      circle.path.setAttribute('stroke', state.color);
+      
+
+      var value = Math.round(circle.value() * 100);
+      if (value === 0) {
+        circle.setText('');
+      } 
+      else if (value<100){
+        circle.setText(`${value}%`);
+      }
+      else if(value >100) {
+        circle.setText(`+${value-100}%`);
+      }
+
+    }
+});
+bar.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
+bar.text.style.fontSize = '3rem';
+
+if( totalhourconverted>1){}
+
+bar.animate(totalhourconverted);  // Number from 0.0 to 1.0
+  // Value from 0.0 to 1.0
+
+var list = document.getElementById("loggedlist")
+for (var i = 0; i < log.length; i++) {
+    var content = log[i];
+    var li = document.createElement('li');
+    li.innerText= content
+    list.appendChild(li);
+}
+
+
+
+var ctx = document.getElementById("myChart");
+function logpage(){
+  location.assign(`/${user}/loghours`)
+}
+  
+   
+
+ 
+   
+var myChart = new Chart(ctx, {
+  type: 'doughnut',
+  data: {
+    labels: ['milano', 'toscano', 'serrenton'],
+    datasets: [{
+      label: '# of Tomatoes',
+      data: [milano,toscano,serrento],
+      backgroundColor: [
+        'rgba(255, 99, 132)',
+        'rgba(54, 162, 235)',
+        'rgba(255, 206, 86)',
+        'rgba(75, 192, 192)'
+      ],
+      borderColor: [
+        'rgba(255,99,132,1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)'
+      ],
+      borderWidth: 5
+    }]
+  },
+  options: {
+   	//cutoutPercentage: 40,
+    responsive: true,
+    
+    responsiveAnimationDuration: 1000
+   
+
+  }
+});
+
+new Chart(document.getElementById("bar-chart"), {
+    type: 'bar',
+    data: {
+      labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
+      datasets: [
+        {
+          label: "Population (millions)",
+          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+          data: [2478,5267,734,784,433]
+        }
+      ]
+    },
+    options: {
+      legend: { display: false },
+      title: {
+        display: true,
+        text: 'Predicted world population (millions) in 2050'
+      }
+    }
+});   
+
+///////////////////
+
+</script>
+</html>

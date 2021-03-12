@@ -1,0 +1,19 @@
+.flexboxconatiner{
+    display: flexbox;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+
+}
+.login{
+    justify-content: center;
+    align-items: center;
+
+}
+.g-signin2{
+    margin: 0 auto;
+}
+#data{
+    display: none;
+}

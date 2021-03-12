@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+.clear{
+    display: none;
+}
+
+</style>
+<body>
+    log your hours <%=user.name%> 
+    <a href="/profile" >go back to profile </a><br>
+
+    <form onSubmit="return confirm('Are you sure you wish to add?');" action="/loghours" method="POST" id="form1">
+        <div class="clear">
+
+            <label for="username">Your name </label>
+            <input  type="text" id="username" name="username" value=<%= user.name.replace(/ /g, `&nbsp`) %>  required><br>
+            <label for="username">month </label>
+            <input type="text" id="month" name="month" value=<%= month %>  required><br>
+            <label for="date">date </label>
+            <input type="text" id="date" name="date" value=<%= date %>  required><br>
+            <label for="date">year </label>
+            <input type="text" id="year" name="year" value=<%= year %>  required><br>
+
+        </div>
+      
+
+        <label for="milano">No of hours in milano</label>
+        <input type="number" id="milano" name="milano" min="0" min=0 step="any" required><br>
+        
+
+        <label for="quantity">No of hours in serrento</label>
+        <input type="number" id="serrento" name="serrento" min="0"min=0 step="any" required><br>
+
+        <label for="quantity">No of hours in toscano</label>
+        <input type="number" id="toscano" name="toscano" min="0" min=0 step="any" required ><br>
+
+        <div class="description">
+            <label for="descriptionthings">What did you do today?</label><br>
+            <textarea  placeholder="e.g i did something and lucy felt great " id="descriptionthings" name="descriptionthings" rows="4" cols="50"></textarea>
+            
+
+        </div>
+
+       
+        <br>
+        <label for="date">Date</label>
+<input type="date" id="date" name="date">
+
+    </form>
+    <button   type="submit" form="form1" value="Submit">Submit</button>
+</body>
+<script>
+
+
+</script>
+</html>

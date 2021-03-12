@@ -1,0 +1,181 @@
+
+HTML, body {
+    margin: 0;
+    padding: 0px;
+      border: 0px;
+    }
+
+    .flexwraprow{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+       
+
+    }
+    .center{
+        justify-content: space-around;
+        align-items: center;
+    }
+    .flexwrapcolumn{
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: center;
+    align-items: center;
+
+    }
+    
+
+
+.masterwrap{
+    width: 75%;
+    height: 100vh;
+    margin: 0 auto;
+    display: grid;
+    grid-template-areas: "nav head main"
+                       "nav  head  main"
+                       "nav  foot  foot";
+  grid-template-rows: 30% 30% 40%;
+  grid-template-columns: 150px 1fr 1fr;
+}
+.sidebar{
+    grid-area: nav;
+}
+.hourprogress{
+    grid-area: head;
+}
+.chart-container{
+    grid-area: main;
+}
+.history{
+    grid-area: foot;
+    overflow:scroll;
+}
+#container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+h1{
+    font: 700;
+    
+}
+#hour{
+    display:none;
+}
+#data{
+    display: none;
+}
+
+#container {
+    margin: 20px;
+    width: 200px;
+    height: 200px;
+    position: relative;
+  }
+
+  #userpicture{
+      border-radius: 100%;
+      
+  }
+  /*mobile for 320x626*/
+ canvas{
+     width:300px;
+     height: 300px;
+ }
+
+  .card{
+    background-color: hsl(0, 2%, 55%);
+    width: 95%;
+    margin-bottom: 20px;
+}
+
+@media only screen and (max-width: 350px) {
+    .masterwrap{
+
+        width: 100vw;
+        height:auto;
+        background-color: whitesmoke;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    HTML, body {
+        margin: 0;
+        padding: 0px;
+          border: 0px;
+        }
+    
+       
+        .center{
+            justify-content: space-around;
+            align-items: center;
+        }
+        .flexwrapcolumn{
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            justify-content: center;
+        align-items: center;
+    
+        }
+        
+    
+    
+    
+    .sidebar{
+       
+    }
+    .hourprogress{
+     
+    }
+    .chart-container{
+        
+    }
+    .history{
+        
+    }
+  
+    
+    h1{
+        font: 700;
+        
+    }
+    #hour{
+        display:none;
+    }
+    #data{
+        display: none;
+    }
+    
+    #container {
+        margin: 20px;
+        width: 200px;
+        height: 200px;
+        position: relative;
+      }
+    
+      #userpicture{
+          border-radius: 100%;
+          
+      }
+      /*mobile for 320x626*/
+   
+      .card{
+        background-color: hsl(0, 2%, 55%);
+        width: 95%;
+        margin-bottom: 20px;
+    }
+    .history{
+        
+        overflow:auto
+    }
+
+   
+    
+  }
