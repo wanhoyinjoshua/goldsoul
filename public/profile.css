@@ -93,7 +93,7 @@ h1{
     margin-bottom: 20px;
 }
 
-@media only screen and (max-width: 350px) {
+@media only screen and (max-width: 450px) {
     .masterwrap{
 
         width: 100vw;
