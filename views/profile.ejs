@@ -8,10 +8,11 @@
     <title>Document</title>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/progressbar.js/1.0.0/progressbar.js"></script>
+    
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,300,600,800,900" rel="stylesheet" type="text/css">
 </head>
 <link rel="stylesheet" href="profile.css">
+<link rel="stylesheet" type="text/css" href="loading-bar.css"/>
 
 <body>
  <div class="masterwrap">
@@ -49,7 +50,9 @@
 
   <div class=" hourprogress card flexwrapcolumn">
     <p>Your Hours this month </p>
-    <div id="container"></div>
+
+    <div class="ldBar label-center" data-preset="circle"data-value="50"></div>
+    
     <div id="totalhour"></div>
 
   </div>
@@ -111,47 +114,11 @@ var log = finaldata.loggeddetails
 var totalhours= document.getElementById("totalhour");
 
 
-totalhours.innerText=`${totalhour}/30`
+totalhours.innerText=`${totalhour}/30`;
 
-var bar = new ProgressBar.Circle(container, {
-  color: '#aaa',
-  // This has to be the same size as the maximum width to
-  // prevent clipping
-  strokeWidth: 9,
-  trailWidth: 10,
-  easing: 'easeInOut',
-  duration: 1400,
-  svgStyle: null,
-  text: {
-    autoStyleContainer: false
-  },
-  from: { color: '#aaa', width: 1 },
-  to: { color: '#333', width: 4 },
-  // Set default step function for all animate calls
-  step: function(state, circle) {
-      circle.path.setAttribute('stroke', state.color);
-      
 
-      var value = Math.round(circle.value() * 100);
-      if (value === 0) {
-        circle.setText('');
-      } 
-      else if (value<100){
-        circle.setText(`${value}%`);
-      }
-      else if(value >100) {
-        circle.setText(`+${value-100}%`);
-      }
 
-    }
-});
-bar.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
-bar.text.style.fontSize = '3rem';
 
-if( totalhourconverted>1){}
-
-bar.animate(totalhourconverted);  // Number from 0.0 to 1.0
-  // Value from 0.0 to 1.0
 
 var list = document.getElementById("loggedlist")
 for (var i = 0; i < log.length; i++) {
@@ -228,4 +195,6 @@ new Chart(document.getElementById("bar-chart"), {
 ///////////////////
 
 </script>
+<script type="text/javascript" src="loading-bar.js"></script>
+
 </html>
