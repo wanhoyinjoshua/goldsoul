@@ -11,6 +11,7 @@ var bodyParser = require('body-parser')
 var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 var ProgressBar = require('progressbar.js');
+const port = process.env.PORT||3000;
 
 
 
@@ -303,4 +304,4 @@ function checkifnocreate(checkuser,year,month){
 
  
 
-  app.listen(process.env.port || 3000);
+  app.listen(port);
