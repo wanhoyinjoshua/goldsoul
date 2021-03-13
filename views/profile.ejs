@@ -75,7 +75,17 @@
   
   <div class="card history">
     <ul id="loggedlist" >
-      <h3>this is my logged history</h3>
+      <h3>this is my logged history for this month  </h3>
+      <table id="heading"style="width:100%">
+        <tr style="padding:5px; width: 25%;">
+          <th>Date</th>
+          <th>Resident</th>
+          <th>Activities</th>
+          <th>Outcome</th>
+          <th>Hours </th>
+        </tr>
+        
+      </table>
 
 
     </ul>
@@ -101,6 +111,7 @@
   
 
 var info = document.getElementById("data").innerHTML;
+console.log(info)
 var user = document.getElementById("user").innerText;
 var finaldata= JSON.parse(info)
 var milano= finaldata.Milano
@@ -120,13 +131,29 @@ totalhours.innerText=`${totalhour}/30`;
 
 
 
-var list = document.getElementById("loggedlist")
-for (var i = 0; i < log.length; i++) {
-    var content = log[i];
-    var li = document.createElement('li');
+var list = document.getElementById("heading")
+var loggedlist= document.getElementById("loggedlist")
+
+//create row 
+for (i=0;i<log.length;i++){
+  var newrow= document.createElement('tr')
+newrow.style="padding:5px; width: 25%;"
+//put that in existing table , will us efor loop to implememt 
+list.appendChild(newrow)
+
+for (var j = 0; j < log[i].length; j++) {
+    var content = log[i][j];
+    console.log(content)
+    var li = document.createElement('th');
     li.innerText= content
-    list.appendChild(li);
+    newrow.appendChild(li);
 }
+//inner for loop 
+
+}
+
+
+
 
 
 

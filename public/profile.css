@@ -5,6 +5,11 @@ HTML, body {
       border: 0px;
     }
 
+    table, th, td {
+        border: 1px solid black;
+        background-color: wheat;
+      }
+
     .flexwraprow{
         display: flex;
         flex-direction: row;

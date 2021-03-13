@@ -42,8 +42,14 @@
         <input type="number" id="toscano" name="toscano" min="0" min=0 step="any" required ><br>
 
         <div class="description">
-            <label for="descriptionthings">What did you do today?</label><br>
-            <textarea  placeholder="e.g i did something and lucy felt great " id="descriptionthings" name="descriptionthings" rows="4" cols="50"></textarea>
+            <label for="descriptionthings">Who did you visit today?</label><br>
+            <textarea  placeholder="e.g lucy , phyllis" id="descriptionpeople" name="descriptionpeople" rows="4" cols="50" required></textarea><br>
+
+            <label for="descriptionthings">What did you do with them today?</label><br>
+            <textarea  placeholder="e.g i did something and lucy felt great " id="descriptionthings" name="descriptionthings" rows="4" cols="50" required></textarea><br>
+
+            <label for="descriptionthings">What is the outcome for the resident ?</label><br>
+            <textarea  placeholder="e.g they liked it and they all smiled  " id="descriptionoutcome" name="descriptionoutcome" rows="4" cols="50" required></textarea>
             
 
         </div>
@@ -51,7 +57,7 @@
        
         <br>
         <label for="date">Date</label>
-<input type="date" id="date" name="date">
+<input type="date" id="date" name="date" required>
 
     </form>
     <button   type="submit" form="form1" value="Submit">Submit</button>

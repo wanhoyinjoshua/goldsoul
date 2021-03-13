@@ -118,21 +118,18 @@ app.post('/loghours',urlencodedParser , function(req,res){
    console.log(user)
    
 
-    var milano =parseInt(req.body.milano) 
+    var milano =Number(req.body.milano) 
     console.log(milano)
-    var serrento = req.body.serrento
-    var toscano = req.body.toscano
+    var serrento = Number(req.body.serrento)
+    var toscano = Number(req.body.toscano)
     var totalhour= milano+serrento+toscano
+    var residentvisited= req.body.descriptionpeople
     var descriptionthings = req.body.descriptionthings
+    var descriptionoutcome = req.body.descriptionoutcome
     var readable = 
-    `Date : ${req.body.date}
-    Hours spend today:\n
-    Milano: ${milano} , Toscano:${toscano}, Serrento:${serrento}\n
-    total hours spent : ${totalhour}
-    Activities i did today :\n
-    ${descriptionthings}`
+   [[req.body.date,residentvisited,descriptionthings,descriptionoutcome,totalhour]]
 
-    var update={$inc : {Milano:milano, Serrento:serrento,toscano:toscano}, $push: {loggeddetails: readable}}
+    var update={$inc : {Milano:milano, Serrento:serrento,toscano:toscano}, $push: {loggeddetails:readable}}
     
    //update the freakin document 
    mongoose.set('useNewUrlParser', true);
