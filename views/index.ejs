@@ -41,6 +41,9 @@ xhr.onload = function() {
       location.assign("/profile")
      
   }
+  else{
+      console.log("error")
+  }
 };
 xhr.send(JSON.stringify({token: id_token}));
             
