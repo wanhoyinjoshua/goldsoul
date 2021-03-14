@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    monthlyreport
+    <%= loginuser %> 
+    <form id="report"action="/monthlyreport" method="POST">
+        <label for="user"></label>
+        <input  type="text" id="username" name="username" value=<%= loginuser.replace(/ /g, `&nbsp`) %>  required><br>
+        <label for="year">Year</label>
+         <select name="year" id="date-drop-down"></select>
+         <label for="month">Month</label>
+         <select name="month" id="month-drop-down"></select>
+
+        
+
+
+    </form>
+    <button   type="submit" form="report" value="Submit">Submit</button>
+    
+    
+</body>
+
+<script>
+      let dateDropdown = document.getElementById('date-drop-down'); 
+       
+       let currentYear = new Date().getFullYear();    
+       let earliestYear = 2019;     
+       while (currentYear >= earliestYear) {      
+         let dateOption = document.createElement('option');          
+         dateOption.text = currentYear;      
+         dateOption.value = currentYear;        
+         dateDropdown.add(dateOption);      
+         currentYear -= 1;    
+       }
+
+       let monthdropdown =document.getElementById('month-drop-down');
+       
+       let month =1;
+       while(month <=12){
+           let monthoption = document.createElement('option')
+           monthoption.text=month;
+           monthoption.value=month;
+           monthdropdown.add(monthoption);
+           month+=1;
+       }
+
+
+      
+
+</script>
+</html>

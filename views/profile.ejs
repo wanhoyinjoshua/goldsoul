@@ -37,7 +37,7 @@
     
     <div class="flexwraprow">
       <button class="button" onclick="logpage()">log my hours </button>
-      <button class="button" onclick="logpage()">Generate a monthly report </button>
+      <button class="button" onclick="monthlyreport()">Generate a monthly report </button>
       <button class="button" onclick="logpage()">Mark my avalabilities </button>
 
     </div>
@@ -160,6 +160,11 @@ for (var j = 0; j < log[i].length; j++) {
 var ctx = document.getElementById("myChart");
 function logpage(){
   location.assign(`/${user}/loghours`)
+}
+
+function monthlyreport(){
+  location.assign(`/${user}/monthlyreport`)
+
 }
   
    

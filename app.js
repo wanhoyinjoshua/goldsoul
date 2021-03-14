@@ -87,7 +87,42 @@ app.get('/',function(req,res){
 
 });
 
+app.get('/:id/monthlyreport',checkAuthenticated ,function(req,res){
+    let user100= req.user
+    let loginuser= user100.name
 
+    res.render('monthlyreport',{loginuser})
+})
+app.post('/monthlyreport',urlencodedParser  ,function(req,res){
+    
+    let month=Number(req.body.month)
+    let year = Number(req.body.year)
+    let user= req.body.username.replace("&nbsp", " ")
+    console.log(req.body)
+    console.log(user)
+    connecttomongo()
+    databaseuser.findOne({name:user,Year:year,Month:month},function(err,doc){
+
+        if(err){
+            console.log(err)
+
+        }
+        if(doc){
+            
+           
+           
+            console.log(doc)
+            var loginuser=JSON.stringify(doc)
+            res.render('monthlyreportdownload',{loginuser})
+            
+           
+        }
+    }).lean();
+
+
+
+    
+})
 
   app.get('/:id/loghours',checkAuthenticated ,function(req,res){
    
@@ -167,11 +202,20 @@ app.get('/login',function(req,res){
 
   
 
-  app.get('/logout',function(req,res){
-      res.clearCookie('session-token');
-      console.log("logged out and cookies cleared ")
-      res.redirect('/')
-    
+
+
+app.get('/',function(req,res){
+    res.clearCookie('session-token');
+    console.log("logged out and cookies cleared ")
+    res.redirect('/')
+  
+});
+
+app.get('/logout',function(req,res){
+    res.clearCookie('session-token');
+    console.log("logged out and cookies cleared ")
+    res.redirect('/')
+  
 });
 
 

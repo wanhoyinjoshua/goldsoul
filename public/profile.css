@@ -8,6 +8,8 @@ HTML, body {
     table, th, td {
         border: 1px solid black;
         background-color: wheat;
+        text-align: left;
+        
       }
 
     .flexwraprow{

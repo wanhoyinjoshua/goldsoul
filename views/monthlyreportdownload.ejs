@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    download 
+    <div id="data" style="display: none;"><%= loginuser %> </div>
+    <ul id="loggedlist" >
+        <h3>this is my logged history for this month  </h3>
+        <table id="heading"style="width:100%">
+          <tr style="padding:5px; width: 25%;">
+            <th>Date</th>
+            <th>Resident</th>
+            <th>Activities</th>
+            <th>Outcome</th>
+            <th>Hours </th>
+          </tr>
+          
+        </table>
+  
+  
+      </ul>
+</body>
+<script>
+
+    var data = JSON.parse(document.getElementById("data").innerHTML)
+    console.log(data.loggeddetails)
+
+    var list = document.getElementById("heading")
+var loggedlist= document.getElementById("loggedlist")
+
+//create row 
+for (i=0;i<data.loggeddetails.length;i++){
+  var newrow= document.createElement('tr')
+newrow.style="padding:5px; width: 25%;"
+//put that in existing table , will us efor loop to implememt 
+list.appendChild(newrow)
+
+for (var j = 0; j < data.loggeddetails[i].length; j++) {
+    var content = data.loggeddetails[i][j];
+    console.log(content)
+    var li = document.createElement('th');
+    li.innerText= content
+    newrow.appendChild(li);
+}
+//inner for loop 
+
+}
+
+createpdf();
+
+function createpdf(){
+    var table=document.getElementById('heading').innerHTML;
+     // CREATE A WINDOW OBJECT.
+     var win = window.open('', '', 'height=700,width=700');
+
+win.document.write('<html><head>');
+win.document.write('<title>Profile</title>');   // <title> FOR PDF HEADER.
+win.document.write(style);          // ADD STYLE INSIDE THE HEAD TAG.
+win.document.write('</head>');
+win.document.write('<body>');
+win.document.write(sTable);         // THE TABLE CONTENTS INSIDE THE BODY TAG.
+win.document.write('</body></html>');
+
+win.document.close(); 	// CLOSE THE CURRENT WINDOW.
+
+win.print();    // PRINT THE CONTENTS.
+}
+
+
+</script>
+</html>
