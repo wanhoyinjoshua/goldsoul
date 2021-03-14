@@ -6,6 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<style>
+
+    table, th, td {
+        border: 1px solid black;
+        background-color: wheat;
+        text-align: left;
+        
+      }
+</style>
 <body>
     download 
     <div id="data" style="display: none;"><%= loginuser %> </div>
@@ -21,11 +30,14 @@
           </tr>
           
         </table>
-  
+        <input type="button" id="btnExport" value="Export" onclick="Export()" />
+
+  <button onclick="signout()">sign out</button>
   
       </ul>
 </body>
 <script>
+    
 
     var data = JSON.parse(document.getElementById("data").innerHTML)
     console.log(data.loggeddetails)
@@ -50,27 +62,28 @@ for (var j = 0; j < data.loggeddetails[i].length; j++) {
 //inner for loop 
 
 }
+function Export() {
+            html2canvas(document.getElementById('heading'), {
+                onrendered: function (canvas) {
+                    var data = canvas.toDataURL();
+                    var docDefinition = {
+                        content: [{
+                            image: data,
+                            width: 500
+                        }]
+                    };
+                    pdfMake.createPdf(docDefinition).download("Table.pdf");
+                }
+            });
+        }
 
-createpdf();
 
-function createpdf(){
-    var table=document.getElementById('heading').innerHTML;
-     // CREATE A WINDOW OBJECT.
-     var win = window.open('', '', 'height=700,width=700');
+function signout(){
 
-win.document.write('<html><head>');
-win.document.write('<title>Profile</title>');   // <title> FOR PDF HEADER.
-win.document.write(style);          // ADD STYLE INSIDE THE HEAD TAG.
-win.document.write('</head>');
-win.document.write('<body>');
-win.document.write(sTable);         // THE TABLE CONTENTS INSIDE THE BODY TAG.
-win.document.write('</body></html>');
-
-win.document.close(); 	// CLOSE THE CURRENT WINDOW.
-
-win.print();    // PRINT THE CONTENTS.
+    location.assign("/profile")
 }
 
-
 </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 </html>
