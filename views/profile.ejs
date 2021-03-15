@@ -21,7 +21,7 @@
   
   
 
-  <div class="sidebar card">
+  <div class="sidebar card1">
     <div class="flexwraprow center">
 
       
@@ -35,11 +35,12 @@
   
   
     
-    <div class="flexwraprow ">
+    <div class="flexwraprow card1">
       <button class="button card2" onclick="logpage()">log my hours </button>
       <button class="button card2" onclick="monthlyreport()">Generate a monthly report </button>
-      <button class="button card2" onclick="logpage()">Mark my avalabilities </button>
-      <a href="/logout" class="button">Sign out</a>
+      <button class="button card2" onclick="calender()">Mark my avalabilities </button>
+      <button class="button card2" onclick="signout()">Signout </button>
+      
 
     </div>
 
@@ -165,6 +166,14 @@ function logpage(){
 
 function monthlyreport(){
   location.assign(`/${user}/monthlyreport`)
+
+}
+function calender(){
+  location.assign(`/calender`)
+
+}
+function signout(){
+  location.assign(`/logout`)
 
 }
   

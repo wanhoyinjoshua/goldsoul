@@ -36,12 +36,12 @@ HTML, body {
     }
     
     button:focus {
-        outline: 1px solid rgb(0, 0, 0);
+        
         outline-offset: -4px;
     }
     
     button:active {
-        transform: scale(1.5);
+        transform: scale(1.1);
     }
 
     table, th, td {
@@ -101,6 +101,9 @@ HTML, body {
 }
 .chart-container{
     grid-area: main;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .history{
     grid-area: foot;
@@ -142,13 +145,13 @@ h1{
      height: 300px;
  }
 
-  .card{
+ .card1{
     background-color:whitesmoke;
     width: 95%;
     margin-bottom: 20px;
     box-shadow: 
-    12px 12px 16px 0 rgba(0, 0, 0, 0.25),
-    -8px -8px 12px 0 rgba(255, 255, 255, 0.3);
+    12px 12px 16px 0 rgba(0, 0, 0, 0.1),
+    -8px -8px 12px 0 rgba(255, 255, 255, 0.20);
   border-radius: 50px;
  
   margin-left: 0px;
@@ -156,6 +159,23 @@ h1{
   margin-top: 20px;
   margin-bottom: 20px;
 }
+
+  .card{
+    background-color:whitesmoke;
+    width: 95%;
+    margin-bottom: 20px;
+    box-shadow: 
+    12px 12px 16px 0 rgba(0, 0, 0, 0.1),
+    -8px -8px 12px 0 rgba(255, 255, 255, 0.20);
+  border-radius: 50px;
+ 
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+
 .card2{
     background-color:whitesmoke;
     width: 95%;
@@ -215,7 +235,18 @@ h1{
             
           }
         
-    
+          .card1{
+            background-color:whitesmoke;
+            width: 95%;
+            margin-bottom: 20px;
+           
+          border-radius: 50px;
+         
+          margin-left: 0px;
+          margin-right: 0px;
+          margin-top: 20px;
+          margin-bottom: 20px;
+        }
     
     
     .sidebar{
@@ -273,6 +304,8 @@ h1{
     button{
         text-align: center;
         font-size: smaller;
+        height: 80px;
+        width: auto;
     }
 
    

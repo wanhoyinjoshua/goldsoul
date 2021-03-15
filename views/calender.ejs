@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/fullcalendar@5.5.1/main.min.css,npm/fullcalendar@5.5.1/main.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.1/main.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.1/main.min.css">
+</head>
+<style>
+    html, body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+  font-size: 14px;
+}
+
+#calendar {
+  max-width: 1100px;
+  margin: 40px auto;
+}
+
+.flex{
+    display: flex;
+    flex-direction: row;
+
+}
+
+#inputdate{
+    width: 100px;
+}
+
+.modal{
+    background-color: aliceblue;
+}
+</style>
+<body>
+    calender
+    
+    <%= test %> 
+    <%= loginuser %> 
+    <% var test =test %>
+    <% var user =loginuser %>
+    
+
+            
+            <form action="/calender1" method="POST" id="form" >
+                <label for="Name">name</label>
+                <input type="text" name="Name" id="Name" value=<%= user %>  >
+                <label for="title">Title</label>
+                <input type="text" name="title" id="title" >
+                <label for="start">start</label>
+                <input type="text" name="start" id="start" >
+                <label for="end">end</label>
+                <input type="text" name="end" id="end">
+            </form>
+
+            <button   type="submit" form="form" value="Submit">Submit</button>
+
+            
+        
+
+        
+        
+            
+            
+          
+         
+             
+            
+
+        <div id="calendar" ></div>
+
+
+  
+    
+</body>
+<script>
+     var event =JSON.parse('<%-test%>')  //var test is now assigned to getTest which will only work on browsers
+   console.log(event);
+  
+
+document.addEventListener('DOMContentLoaded', function() {
+  var calendarEl = document.getElementById('calendar');
+ 
+
+  var calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth',
+    selectable: true,
+    eventClick: function(info) {
+    alert('Event: ' + info.event.startStr)
+    alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
+    alert('View: ' + info.view.type);
+
+    // change the border color just for fun
+    info.el.style.borderColor = 'red';
+  },
+   
+    select: function(info) {
+        //if difference is 1 then
+      var info1 = prompt('Things to do from ' + info.startStr + ' to ' + info.endStr,'')
+
+      var dateinfo={"Title":info1,"start":info.startStr,"end":info.endStr}
+      var domtitle= document.getElementById("title")
+      var domstart= document.getElementById("start")
+      var domend= document.getElementById("end")
+      domtitle.value = info1;
+      domstart.value = info.startStr;
+      domend.value= info.endStr
+      console.log(dateinfo)
+
+    
+    },
+    initialDate: '2021-03-15',
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek,timeGridDay'
+    },
+    events: event
+    ,
+    eventColor: '#378006'
+  });
+
+  calendar.render();
+});
+</script>
+<script src="https://cdn.jsdelivr.net/combine/npm/fullcalendar@5.5.1,npm/fullcalendar@5.5.1/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.1/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.1/main.min.js"></script>
+</html>

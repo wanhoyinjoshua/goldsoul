@@ -11,7 +11,8 @@ const userSchema = new Schema(
         "Milano":Number,
         "Serrento":Number,
         "toscano":Number,
-        "loggeddetails":Array
+        "loggeddetails":Array,
+        "time":Array
     },{ timestamps: true })
 
 const user = mongoose.model('fuck',userSchema)

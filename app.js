@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const databaseuser = require('./models/model')
+const publictimesheet = require('./models/timesheet')
 const app = express();
 const path = require('path');
 const router = express.Router();
@@ -196,9 +197,78 @@ app.post('/loghours',urlencodedParser , function(req,res){
 
 });
   
-app.get('/login',function(req,res){
+app.get('/calender',checkAuthenticated, function(req,res){
+
+    let date_ob = new Date();
+
+    let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+   
+    
+    let year = date_ob.getFullYear();
+    
+    let user= req.user
+    let loginuser= user.name.replace(" ", "&nbsp")
+   console.log(loginuser)
+   connecttomongo();
+   publictimesheet.findOne({name:user.name}
+     , function(err,doc1){
+         if (err) {
+             console.log(err)
+           } else {
+               console.log("hihi")
+             console.log(doc1.time)
+             var test= doc1.time
+             var test=JSON.stringify(test)
+             console.log(test)
+             res.render('calender',{test , loginuser})
+             
+           
+           }
+     })
+
+
+    
+       
+      
+
+    
     
   });
+
+  app.post('/calender1',urlencodedParser,function(req,res){
+    let date_ob = new Date();
+
+    let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+   
+    
+    let year = date_ob.getFullYear();
+      
+      var start = req.body.start;
+      var end = req.body.end;
+      var title = req.body.title;
+      var name = req.body.Name.replace("&nbsp", " ")
+      var push= [{"title":title,"start":start,"end":end}]
+      var update={ $push: {time:push}}
+      
+
+      connecttomongo();
+      publictimesheet.findOneAndUpdate({name:name},update, {new: true},
+       function(err,doc1){
+
+         if (err) {
+            res.send(err);
+          } else {
+            res.redirect("/calender")
+          
+          }
+    })
+   
+
+
+    console.log(req.body)
+
+  }
+  )
 
   
 
@@ -301,7 +371,25 @@ function checkifnocreate(checkuser,year,month){
     
     
 
-   
+   publictimesheet.exists({name:checkuser},(err,doc)=>{
+
+if(doc){
+    return true 
+}
+else{
+
+    const newtimeuser = new publictimesheet
+        ({
+            "time":[],
+            "name":checkuser
+        })
+
+        newtimeuser.save()
+
+    }
+
+
+   })
     databaseuser.exists({name:checkuser,Year:year,Month:month}, function (err, doc) {
         
         if(doc){
@@ -321,16 +409,23 @@ function checkifnocreate(checkuser,year,month){
                 "Milano":0,
                 "Serrento":0,
                 "toscano":0,
-                "loggeddetails":[]
+                "loggeddetails":[],
+                "time":[]
                 
 
 
             }
+
+           
                 
                     
                 
                
         )
+
+        
+        .then((result)=>{console.log("creation successful")})
+            .catch((err)=>{console.log(err)})
 
             newuser.save()
             .then((result)=>{console.log("creation successful")})
