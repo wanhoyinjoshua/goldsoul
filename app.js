@@ -60,7 +60,7 @@ app.get('/',function(req,res){
 
 
 //get timedata
-
+function showpage(){
 
     databaseuser.findOne({name:loginuser,Year:year,Month:month},function(err,doc){
 
@@ -78,12 +78,12 @@ app.get('/',function(req,res){
 
 
   
-    
 
+}
 
+showpage();
 
-
-
+   
 
 
 });
@@ -384,17 +384,19 @@ else{
             "name":checkuser
         })
 
-        .then((result)=>{console.log("creation successful")})
-            .catch((err)=>{console.log(err)})
+        
 
         newtimeuser.save()
-        .then((result)=>{console.log("creation successful")})
-            .catch((err)=>{console.log(err)})
+        .then((result)=>{console.log("creation successful");})
+        .catch((err)=>{console.log(err)})
 
     }
 
 
    })
+
+  
+
     databaseuser.exists({name:checkuser,Year:year,Month:month}, function (err, doc) {
         
         if(doc){
@@ -429,12 +431,11 @@ else{
         )
 
         
-        .then((result)=>{console.log("creation successful")})
-            .catch((err)=>{console.log(err)})
+        
 
-            newuser.save()
-            .then((result)=>{console.log("creation successful")})
-            .catch((err)=>{console.log(err)})
+        newuser.save()
+        .then((result)=>{console.log("creation successful"); })
+        .catch((err)=>{console.log(err)})
         }
         
     }); 
