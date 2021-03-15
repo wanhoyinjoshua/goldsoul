@@ -5,15 +5,49 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    
 </head>
 <style>
 .clear{
     display: none;
 }
 
+.card{
+    margin: 0 auto;
+        background-color: whitesmoke;
+        width: 50%;
+        margin-bottom: 20px;
+        box-shadow: 
+        12px 12px 16px 0 rgba(0, 0, 0, 0.25),
+        -8px -8px 12px 0 rgba(255, 255, 255, 0.3);
+      border-radius: 50px;
+    
+    }
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    max-width: 90%;
+    margin:0 auto;
+}
+@media only screen and (max-width: 450px) {
+
+    .card{
+        width: 99%;
+    }
+    textarea{
+        width:300px
+    }
+}
 </style>
 <body>
-    log your hours <%=user.name%> 
+
+    <div class="card">
+<div class="container">
+
+
+        log your hours <%=user.name%> 
     <a href="/profile" >go back to profile </a><br>
 
     <form onSubmit="return confirm('Are you sure you wish to add?');" action="/loghours" method="POST" id="form1">
@@ -61,6 +95,9 @@
 
     </form>
     <button   type="submit" form="form1" value="Submit">Submit</button>
+</div>
+    </div>
+    
 </body>
 <script>
 
