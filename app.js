@@ -384,7 +384,12 @@ else{
             "name":checkuser
         })
 
+        .then((result)=>{console.log("creation successful")})
+            .catch((err)=>{console.log(err)})
+
         newtimeuser.save()
+        .then((result)=>{console.log("creation successful")})
+            .catch((err)=>{console.log(err)})
 
     }
 
