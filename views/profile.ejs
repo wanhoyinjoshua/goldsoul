@@ -39,6 +39,8 @@
       <button class="button card2" onclick="logpage()">log my hours </button>
       <button class="button card2" onclick="monthlyreport()">Generate a monthly report </button>
       <button class="button card2" onclick="calender()">Mark my avalabilities </button>
+      <button class="button card2" onclick="Todolist()">Things to do and buy </button>
+      <button class="button card2" onclick="orientation()">Orientation </button>
       <button class="button card2" onclick="signout()">Signout </button>
       
 
@@ -52,6 +54,8 @@
 
   <div class=" hourprogress card flexwrapcolumn">
     <p>Your Hours this month </p>
+
+      
 
     <div class="ldBar label-center" data-preset="circle"data-value="50"></div>
     
@@ -119,6 +123,8 @@ var finaldata= JSON.parse(info)
 var milano= finaldata.Milano
 var serrento= finaldata.Serrento
 var toscano= finaldata.toscano
+var others = finaldata.others
+console.log(others)
 var totalhour= milano+serrento+toscano
 var totalhourconverted=totalhour/30
 var totalhourconvertedstring = `${Math.ceil(totalhour/30*100)}%`
@@ -176,6 +182,14 @@ function signout(){
   location.assign(`/logout`)
 
 }
+function Todolist(){
+  location.assign(`/todolist`)
+
+}
+function orientation(){
+  location.assign(`/orientation`)
+
+}
   
    
 
@@ -184,10 +198,10 @@ function signout(){
 var myChart = new Chart(ctx, {
   type: 'doughnut',
   data: {
-    labels: ['milano', 'toscano', 'serrenton'],
+    labels: ['milano', 'toscano', 'serrenton','others'],
     datasets: [{
       label: '# of Tomatoes',
-      data: [milano,toscano,serrento],
+      data: [milano,toscano,serrento,others],
       backgroundColor: [
         'rgba(255, 99, 132)',
         'rgba(54, 162, 235)',
@@ -213,26 +227,8 @@ var myChart = new Chart(ctx, {
   }
 });
 
-new Chart(document.getElementById("bar-chart"), {
-    type: 'bar',
-    data: {
-      labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
-      datasets: [
-        {
-          label: "Population (millions)",
-          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-          data: [2478,5267,734,784,433]
-        }
-      ]
-    },
-    options: {
-      legend: { display: false },
-      title: {
-        display: true,
-        text: 'Predicted world population (millions) in 2050'
-      }
-    }
-});   
+
+   
 
 ///////////////////
 

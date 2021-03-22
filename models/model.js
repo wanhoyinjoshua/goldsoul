@@ -11,6 +11,7 @@ const userSchema = new Schema(
         "Milano":Number,
         "Serrento":Number,
         "toscano":Number,
+        "others":Number,
         "loggeddetails":Array,
         "time":Array
     },{ timestamps: true })

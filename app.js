@@ -27,6 +27,7 @@ app.set('view engine', 'ejs')
 const {OAuth2Client} = require('google-auth-library');
 const { json } = require('express');
 const user = require('./models/model');
+const { stringify } = require('querystring');
 const CLIENT_ID= '244299986178-16s1c4qbq6k1j16p083ssmfvoiqr07rf.apps.googleusercontent.com';
 const client = new OAuth2Client(CLIENT_ID);
 
@@ -51,8 +52,13 @@ app.get('/',function(req,res){
       //call monngodb
       connecttomongo()
       //check if it is an existing user if yes display if no create a new one 
-      checkifnocreate(loginuser,year,month,)
+      checkifnocreate(loginuser,year,month)
 
+    
+
+        showpage();
+
+     
      
 
     
@@ -81,7 +87,7 @@ function showpage(){
 
 }
 
-showpage();
+
 
    
 
@@ -158,14 +164,16 @@ app.post('/loghours',urlencodedParser , function(req,res){
     console.log(milano)
     var serrento = Number(req.body.serrento)
     var toscano = Number(req.body.toscano)
-    var totalhour= milano+serrento+toscano
+    var other= Number(req.body.other)
+    console.log(other)
+    var totalhour= milano+serrento+toscano+other 
     var residentvisited= req.body.descriptionpeople
     var descriptionthings = req.body.descriptionthings
     var descriptionoutcome = req.body.descriptionoutcome
     var readable = 
    [[req.body.date,residentvisited,descriptionthings,descriptionoutcome,totalhour]]
 
-    var update={$inc : {Milano:milano, Serrento:serrento,toscano:toscano}, $push: {loggeddetails:readable}}
+    var update={$inc : {Milano:milano, Serrento:serrento,toscano:toscano,others:other}, $push: {loggeddetails:readable}}
     
    //update the freakin document 
    mongoose.set('useNewUrlParser', true);
@@ -288,6 +296,73 @@ app.get('/logout',function(req,res){
   
 });
 
+app.get('/publictime',(req,res)=>{
+    connecttomongo();
+    publictimesheet.find((err,doc)=>{
+        var list =[];
+
+        for(i=0;i<doc.length;i++){
+
+
+            doc1=JSON.stringify(doc[i].time)
+            if(doc1!='[]'){
+
+               
+                    list.push(doc1)
+
+                
+
+                
+
+            }
+            
+
+        }
+        
+        var newlist=[]
+        for(i=0;i<list.length;i++){
+            newlist.push(JSON.parse(list[i]))
+        }
+        console.log(newlist)
+var ultimatelist=[]
+        for(i=0;i<newlist.length;i++){
+            for(j=0;j<newlist[i].length;j++){
+                ultimatelist.push(newlist[i][j])
+
+            }
+        }
+        console.log(ultimatelist)
+        
+        
+        
+        
+        
+
+
+    
+
+       
+       
+
+       
+        ultimatelist=JSON.stringify(ultimatelist)
+
+        res.render('publictime',{ultimatelist})
+
+    }
+
+    )
+
+})
+
+app.get('/todolist',(req,res)=>{
+res.send("todolist")
+
+})
+app.get('/orientation',(req,res)=>{
+res.send("orientation")
+    
+})
 
 
 
@@ -374,7 +449,7 @@ function checkifnocreate(checkuser,year,month){
    publictimesheet.exists({name:checkuser},(err,doc)=>{
 
 if(doc){
-    return true 
+    console.log("no need to create ")
 }
 else{
 
@@ -416,6 +491,7 @@ else{
                 "Milano":0,
                 "Serrento":0,
                 "toscano":0,
+                "others":0,
                 "loggeddetails":[],
                 "time":[]
                 
@@ -434,11 +510,13 @@ else{
         
 
         newuser.save()
-        .then((result)=>{console.log("creation successful"); })
+        .then((result)=>{console.log("creation successful"); return true })
         .catch((err)=>{console.log(err)})
         }
         
     }); 
+
+    return false
     
 }
 
