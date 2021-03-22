@@ -171,7 +171,7 @@ app.post('/loghours',urlencodedParser , function(req,res){
     var descriptionthings = req.body.descriptionthings
     var descriptionoutcome = req.body.descriptionoutcome
     var readable = 
-   [[req.body.date,residentvisited,descriptionthings,descriptionoutcome,totalhour]]
+   [[req.body.date[1],residentvisited,descriptionthings,descriptionoutcome,totalhour]]
 
     var update={$inc : {Milano:milano, Serrento:serrento,toscano:toscano,others:other}, $push: {loggeddetails:readable}}
     

@@ -9,13 +9,23 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.1/main.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.1/main.min.css">
 </head>
+<style>
+    .clear{
+        display: none;
+    }
+</style>
 <body>
 
     
-   
-    
+   <div class="clear">
     <%= ultimatelist %> 
     <% var doc2 =ultimatelist %>
+
+   </div>
+
+   <a href="/profile" >go back to profile </a><br>
+    
+
     <div id="calendar" ></div>
 
 
@@ -34,31 +44,10 @@
 
   var calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
-    selectable: true,
-    eventClick: function(info) {
-    alert('Event: ' + info.event.startStr)
-    alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
-    alert('View: ' + info.view.type);
-
-    // change the border color just for fun
-    info.el.style.borderColor = 'red';
-  },
+    selectable: false,
    
-    select: function(info) {
-        //if difference is 1 then
-      var info1 = prompt('Things to do from ' + info.startStr + ' to ' + info.endStr,'')
-
-      var dateinfo={"Title":info1,"start":info.startStr,"end":info.endStr}
-      var domtitle= document.getElementById("title")
-      var domstart= document.getElementById("start")
-      var domend= document.getElementById("end")
-      domtitle.value = info1;
-      domstart.value = info.startStr;
-      domend.value= info.endStr
-      console.log(dateinfo)
-
+   
     
-    },
     initialDate: '2021-03-15',
     headerToolbar: {
       left: 'prev,next today',

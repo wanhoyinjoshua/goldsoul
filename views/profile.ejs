@@ -8,6 +8,7 @@
     <title>Document</title>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/progressbar.js/1.0.0/progressbar.min.js"></script>
     
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,300,600,800,900" rel="stylesheet" type="text/css">
 </head>
@@ -57,7 +58,7 @@
 
       
 
-    <div class="ldBar label-center" data-preset="circle"data-value="50"></div>
+    <div id="container"></div>
     
     <div id="totalhour"></div>
 
@@ -226,6 +227,38 @@ var myChart = new Chart(ctx, {
 
   }
 });
+
+var bar = new ProgressBar.Circle(container, {
+  color: '#aaa',
+  // This has to be the same size as the maximum width to
+  // prevent clipping
+  strokeWidth: 20,
+  trailWidth: 10,
+  easing: 'easeInOut',
+  duration: 1400,
+  text: {
+    autoStyleContainer: false
+  },
+  from: { color: '#aaa', width: 1 },
+  to: { color: '#FF69B4', width: 4 },
+  // Set default step function for all animate calls
+  step: function(state, circle) {
+    circle.path.setAttribute('stroke', state.color);
+    circle.path.setAttribute('stroke-width', state.width);
+
+    var value = Math.round(circle.value() * 100);
+    if (value === 0) {
+      circle.setText('');
+    } else {
+      circle.setText(`${value}%`);
+    }
+
+  }
+});
+bar.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
+bar.text.style.fontSize = '2rem';
+
+bar.animate(totalhourconverted);
 
 
    

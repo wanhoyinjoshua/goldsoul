@@ -35,29 +35,41 @@
 .modal{
     background-color: aliceblue;
 }
+
+.clear{
+  display: none;
+}
 </style>
 <body>
-    calender
-    
-    <%= test %> 
-    <%= loginuser %> 
-    <% var test =test %>
-    <% var user =loginuser %>
-    
 
+  <a href="/profile" >go back to profile </a><br>
+    
+    <div class="clear">
+      <%= test %> 
+      <%= loginuser %> 
+      <% var test =test %>
+      <% var user =loginuser %>
+
+    </div>
+   
+    
+<div class="clear">
+  <form action="/calender1" method="POST" id="form" >
+    <label for="Name">name</label>
+    <input type="text" name="Name" id="Name" value=<%= user %>  >
+    <label for="title">Title</label>
+    <input type="text" name="title" id="title" >
+    <label for="start">start</label>
+    <input type="text" name="start" id="start" >
+    <label for="end">end</label>
+    <input type="text" name="end" id="end">
+</form>
+
+</div>
             
-            <form action="/calender1" method="POST" id="form" >
-                <label for="Name">name</label>
-                <input type="text" name="Name" id="Name" value=<%= user %>  >
-                <label for="title">Title</label>
-                <input type="text" name="title" id="title" >
-                <label for="start">start</label>
-                <input type="text" name="start" id="start" >
-                <label for="end">end</label>
-                <input type="text" name="end" id="end">
-            </form>
+          
 
-            <button   type="submit" form="form" value="Submit">Submit</button>
+          
 
             
         
@@ -110,6 +122,13 @@ document.addEventListener('DOMContentLoaded', function() {
       domstart.value = info.startStr;
       domend.value= info.endStr
       console.log(dateinfo)
+
+      if(domtitle.value&& domstart.value&& domend.value != null){
+        document.getElementById("form").submit();
+      }
+      else{
+        window.alert("Please enter title ")
+      }
 
     
     },
