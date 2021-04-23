@@ -94,6 +94,60 @@ function showpage(){
 
 });
 
+app.post('/profile',urlencodedParser,(req,res)=>{
+
+    console.log(req.body)
+    var indextodelete= Number(req.body.arrayele-1);
+    var id= req.body.databaseid;
+    var other=req.body.others;
+    var milano=req.body.milano;
+    var serrento= req.body.serrento;
+    var toscano=req.body.toscano;
+    console.log(indextodelete)
+var update={$unset: { [`loggeddetails.${indextodelete}`]: 1}}
+var update2={$pull : { "loggeddetails": null}}
+var update3={$inc : {Milano:-milano, Serrento:-serrento,toscano:-toscano,others:-other}}
+
+    connecttomongo()
+    databaseuser.findOneAndUpdate({_id:id},update,{new: true}, function(err,doc1){
+
+        if(doc1){
+            connecttomongo()
+    databaseuser.findOneAndUpdate({_id:id},update2,{new: true}, function(err,doc1){
+
+
+        if(doc1){
+            
+        }
+
+
+
+    })
+        }
+
+
+
+    })
+
+
+    connecttomongo()
+    databaseuser.findOneAndUpdate({_id:id},update3,{new: true}, function(err,doc1){
+
+        if(doc1){
+            res.redirect("/profile")
+        }
+
+
+
+    })
+
+    
+   
+
+
+
+})
+
 app.get('/:id/monthlyreport',checkAuthenticated ,function(req,res){
     let user100= req.user
     let loginuser= user100.name
@@ -171,7 +225,7 @@ app.post('/loghours',urlencodedParser , function(req,res){
     var descriptionthings = req.body.descriptionthings
     var descriptionoutcome = req.body.descriptionoutcome
     var readable = 
-   [[req.body.date[1],residentvisited,descriptionthings,descriptionoutcome,totalhour]]
+   [[req.body.date[1],residentvisited,descriptionthings,descriptionoutcome,totalhour,milano,serrento,toscano,other]]
 
     var update={$inc : {Milano:milano, Serrento:serrento,toscano:toscano,others:other}, $push: {loggeddetails:readable}}
     
@@ -255,7 +309,22 @@ app.get('/calender',checkAuthenticated, function(req,res){
       var end = req.body.end;
       var title = req.body.title;
       var name = req.body.Name.replace("&nbsp", " ")
-      var push= [{"title":title,"start":start,"end":end}]
+      console.log(name)
+      if (name=="wan joshua"){
+          
+          color="blue"
+      }
+      if(name=="Lauren Wijaya"){
+        color="orange"
+
+      }
+      if(name=="Charlotte Yan"){
+          color="green"
+      }
+      if(name=="Kate Yin"){
+          color="pink"
+      }
+      var push= [{"title":title,"start":start,"end":end,"color":color}]
       var update={ $push: {time:push}}
       
 
@@ -518,7 +587,10 @@ else{
 
     return false
     
+
+
 }
+
 
 
 

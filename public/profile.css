@@ -8,6 +8,27 @@ HTML, body {
       color: rgb(116, 116, 116);
     }
 
+    .fa-minus-circle{
+        color: red;
+    }
+
+    .none{
+        display: none;
+    }
+    .noneth{
+        display: none;
+    }
+
+
+tr:last-child{
+
+    border: none;
+        background-color:none;
+
+
+
+    }
+
     button {
         color: rgb(116, 116, 116);
         display: inline-block;
@@ -80,7 +101,10 @@ HTML, body {
 
     }
     
-
+    .fa-minus-circle:hover{
+        cursor: pointer;
+        
+    }
 
 .masterwrap{
     width: 75%;

@@ -9,7 +9,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/progressbar.js/1.0.0/progressbar.min.js"></script>
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,300,600,800,900" rel="stylesheet" type="text/css">
 </head>
 <link rel="stylesheet" href="profile.css">
@@ -17,6 +17,22 @@
 
 <body>
  <div class="masterwrap">
+
+  <form action="/profile" method="POST" id="deleteform" style="">
+
+    <label for="arrayele">arrayelement</label><br>
+    <input type="text" id="arrayele" name="arrayele"><br>
+    <label for="databaseid">Last name:</label><br>
+    <input type="text" id="databaseid" name="databaseid">
+    <label for="others">others</label><br>
+    <input type="text" id="others" name="others">
+    <label for="milano">milano</label><br>
+    <input type="milano" id="milano" name="milano">
+    <label for="serrento">serrento</label><br>
+    <input type="serrento" id="serrento" name="serrento">
+    <label for="toscano">toscano</label><br>
+    <input type="toscano" id="toscano" name="toscano">
+  </form>
 
   
   
@@ -90,6 +106,10 @@
           <th>Activities</th>
           <th>Outcome</th>
           <th>Hours </th>
+          <th class="none">milano </th>
+          <th class="none">serento </th>
+          <th class="none">toscano </th>
+          <th class="none">others</th>
         </tr>
         
       </table>
@@ -126,10 +146,11 @@ var serrento= finaldata.Serrento
 var toscano= finaldata.toscano
 var others = finaldata.others
 console.log(others)
-var totalhour= milano+serrento+toscano
+var totalhour= milano+serrento+toscano+others
 var totalhourconverted=totalhour/30
 var totalhourconvertedstring = `${Math.ceil(totalhour/30*100)}%`
 var log = finaldata.loggeddetails
+console.log(log)
 
 var totalhours= document.getElementById("totalhour");
 
@@ -143,23 +164,60 @@ totalhours.innerText=`${totalhour}/30`;
 var list = document.getElementById("heading")
 var loggedlist= document.getElementById("loggedlist")
 
+function modifyText(){
+  window.alert("you want to delete?")
+}
+
 //create row 
 for (i=0;i<log.length;i++){
   var newrow= document.createElement('tr')
 newrow.style="padding:5px; width: 25%;"
 //put that in existing table , will us efor loop to implememt 
-list.appendChild(newrow)
+list.appendChild(newrow);
 
-for (var j = 0; j < log[i].length; j++) {
+  for (var j = 0; j < log[i].length; j++) {
     var content = log[i][j];
     console.log(content)
-    var li = document.createElement('th');
+
+    if(j>log[i].length-5){
+      var li = document.createElement('th');
+      li.classList.add("noneth");
+
+    }
+    else{
+
+      var li = document.createElement('th');
+
+    }
+    
     li.innerText= content
     newrow.appendChild(li);
 }
+
+
+
+
+
+
+
+
 //inner for loop 
 
+
+var delete1= document.createElement('i')
+delete1.style.width="20px";
+delete1.style.height="20px";
+delete1.className="fas fa-minus-circle"
+
+newrow.appendChild(delete1)
+
+var entryno = document.createElement('span')
+entryno.innerText=`${i+1}`
+newrow.appendChild(entryno)
+
+
 }
+
 
 
 
@@ -265,7 +323,70 @@ bar.animate(totalhourconverted);
 
 ///////////////////
 
+
+
+
+var deletebutton = document.getElementsByClassName("fa-minus-circle");
+console.log(deletebutton)
+
+let p = Array.from(document.getElementsByClassName("fa-minus-circle"))
+console.log(p[0])
+
+console.log(p)
+//send psot database id + the index numner of the array
+console.log(finaldata._id)
+
+for(i=0;i<p.length;i++){
+  p[i].addEventListener("click",(e)=>{
+
+    
+
+
+    
+   
+
+
+
+
+    //newform demo
+
+    var form = document.getElementById("arrayele")
+    var form2 = document.getElementById("databaseid")
+    var othershr=document.getElementById("others")
+    var serrentohr=document.getElementById("serrento")
+    var milanohr=document.getElementById("milano")
+    var toscanohr=document.getElementById("toscano")
+    var actualform=document.getElementById("deleteform")
+    var statothers= e.target.previousSibling
+    var stattoscano=statothers.previousSibling;
+    var statserrento=stattoscano.previousSibling;
+    var statmilano=statserrento.previousSibling;  
+    console.log(statothers)
+    console.log(stattoscano)
+
+    form.value=e.target.nextSibling.innerText
+    form2.value=finaldata._id
+    othershr.value=statothers.innerText;
+    serrentohr.value=statserrento.innerText;
+    toscanohr.value= stattoscano.innerText;
+    milanohr.value=statmilano.innerText;
+
+
+    actualform.submit();
+
+
+
+    
+    
+
+    
+    
+}
+
+  )}
+
 </script>
 <script type="text/javascript" src="loading-bar.js"></script>
+
 
 </html>

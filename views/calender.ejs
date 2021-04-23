@@ -63,6 +63,8 @@
     <input type="text" name="start" id="start" >
     <label for="end">end</label>
     <input type="text" name="end" id="end">
+    <label for="color">color</label>
+    <input type="text" name="color" id="color">
 </form>
 
 </div>
@@ -90,8 +92,11 @@
     
 </body>
 <script>
+
+  
      var event =JSON.parse('<%-test%>')  //var test is now assigned to getTest which will only work on browsers
    console.log(event);
+   
   
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -118,9 +123,13 @@ document.addEventListener('DOMContentLoaded', function() {
       var domtitle= document.getElementById("title")
       var domstart= document.getElementById("start")
       var domend= document.getElementById("end")
+      var domcolor= document.getElementById("color")
       domtitle.value = info1;
       domstart.value = info.startStr;
       domend.value= info.endStr
+
+      
+      
       console.log(dateinfo)
 
       if(domtitle.value&& domstart.value&& domend.value != null){
