@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const databaseuser = require('./models/model')
+const residentprofile= require('./models/residentprofile')
 const publictimesheet = require('./models/timesheet')
 const app = express();
 const path = require('path');
@@ -37,6 +38,82 @@ app.get('/',function(req,res){
    
     res.render('index')
   });
+
+  app.get('/residentprofile',function(req,res){
+
+    //create a form first 
+
+    connecttomongo();
+    residentprofile.findOne({ purpose: "residentlist" },function(err,doc){
+        if(doc){
+           console.log(doc)
+            console.log(doc.toscano)
+            toscano= doc.toscano;
+            milano= doc.milano;
+            serrento=doc.serrento
+            doc=JSON.stringify(doc)
+            res.render('residentprofile',{doc})
+
+        }
+        else if (err){
+            console.log(err)
+        }
+
+    })
+
+  })
+
+  app.post('/residentprofile',urlencodedParser, (req,res)=>{
+
+    console.log(req.body.residentname)
+    //have a bunch of json objects , have a list of acctitivy genre by using the fist to compare then pop it in a list , 
+    //make an array for every object , [1on1, sensory stimulation, 2on2 ]==> [json foreach]
+    // make an object for each activity {actigivyt: , actively enagegd : pasivley enagwed, refused }
+    //
+    residentprofile.find({ residentname: `${req.body.residentname}` },function(err,doc){
+
+        if(doc){
+            console.log(doc.length)
+            var activitylist=[]
+            for(i=0;i<doc.length;i++){
+                activitylist.push(doc[i].activitygenre)
+                
+            }
+            let uniqueactivity = [...new Set(activitylist)];
+            console.log(uniqueactivity)
+
+            class residentactivitygenre{
+                constructor(activities) {
+                    
+                    this.activities = activities;
+                  }
+            }
+
+            const detailed= uniqueactivity.map(x=>doc.filter(doc => doc.activitygenre ==x))
+
+            
+
+            console.log(detailed)
+
+            
+            
+            
+
+        }
+        else{
+            console.log(err)
+        }
+
+
+
+
+    })
+
+
+  })
+
+  
+ 
 
   app.get('/profile',checkAuthenticated ,function(req,res){
       let user= req.user
@@ -245,6 +322,39 @@ app.post('/loghours',urlencodedParser , function(req,res){
                         res.redirect("/profile")
                       }
                 })
+
+            // update the resident profile
+            connecttomongo();
+
+            //create a new document directly
+            //for the case of individual not for group activities 
+
+                const newresidentactivity = new residentprofile
+                    ({
+                        "residentname":req.body.descriptionpeople,
+                        "entryno":req.body.entryno,
+                        "activitygenre":req.body.activitygenre,
+                        "activitydescription":req.body.descriptionthings,
+                        "outcomegenre":req.body.outcome,
+                        "outcomedescription":req.body.descriptionoutcome,
+                        "time":req.body.time,
+                        "month":req.body.month,
+                        "date":req.body.date[0],
+                        "year":req.body.year,
+                        "whodidthis":user
+                        
+                        
+                    })
+            
+                    
+            
+                    newresidentactivity.save()
+                    .then((result)=>{console.log("creation resident successful");})
+                    .catch((err)=>{console.log(err)})
+            
+                
+           
+
            
                 
         

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .clickable{
+        cursor: pointer;
+    }
+</style>
+<body>
+    residentprofileview
+    <div id="residentist">
+        <%= doc %>
+        
+    </div>
+    <input type="radio" id="Toscano" name="gender" value="Toscano">
+    <label for="Toscano">Toscano</label>
+    <input type="radio" id="Milano" name="gender" value="Milano">
+    <label for="Milano">Milano</label>
+    <input type="radio" id="Milanofirstfloor" name="gender" value="Milano first floor">
+    <label for="Milano">Milano first floor</label>
+    <input type="radio" id="Serrento" name="gender" value="Serrento">
+    <label for="Serrento">Serrento</label><br>
+    <form id="residentform"  action="/residentprofile" method="POST">
+
+        <label for="residentname">Resident name </label>
+
+        <input id="residentname"name ="residentname" type="text"></input>
+
+    </form>
+    <button   id="residentsubmit"type="submit" form="residentform" value="Submit" >Find resident </button>
+    
+    <div id="autocomplete">
+
+    </div>
+    
+
+    
+ 
+    
+    
+</body>
+<script>
+    var residentlist= document.getElementById("residentist").innerText
+    var residentlist= JSON.parse(residentlist)
+    var auto= document.getElementById("autocomplete");
+    var Milanofirstfloor= document.getElementById("Milanofirstfloor")
+    var Toscano= document.getElementById("Toscano")
+    var Serrento= document.getElementById("Serrento")
+    var Milano= document.getElementById("Milano")
+     //for all resident for default
+     var allresident = residentlist.milano.concat(residentlist.toscano,residentlist.serrento)
+    console.log(allresident)
+    //for serrento
+    var milano = residentlist.milano
+    var milanofirstfloor= residentlist.milanofirstfloor
+    var serrento = residentlist.serrento;
+    var toscano= residentlist.toscano
+    var residentname = document.getElementById("residentname")
+
+    //default state
+    function showresident(location){
+
+        for (i=0;i<location.length;i++){
+       var resident= document.createElement("div");
+       resident.innerText= location[i]
+       resident.classList.add("clickable")
+       resident.addEventListener("click",function(e){
+          residentname.value= e.target.innerText
+          console.log("HI")
+
+       })
+       console.log(resident)
+       auto.appendChild(resident)
+
+
+    }
+}
+    //default display
+    showresident(allresident)
+    
+
+    //attach eventlisteners
+    Milanofirstfloor.addEventListener("click",function(){
+        //clear initial array and clear dom 
+        auto.innerHTML=""
+        showresident(milanofirstfloor)
+        console.log("milanofirstfloor")
+    })
+    Serrento.addEventListener("click",function(){
+        //clear initial array and clear dom 
+        console.log("Serrento")
+        auto.innerHTML=""
+        showresident(serrento)
+    })
+    Toscano.addEventListener("click",function(){
+        //clear initial array and clear dom 
+        console.log("Toscano")
+        auto.innerHTML=""
+        showresident(toscano)
+    })
+    Milano.addEventListener("click",function(){
+        //clear initial array and clear dom 
+        console.log("Milano")
+        auto.innerHTML=""
+        showresident(milano)
+    })
+
+
+    
+    console.log(residentlist)
+   
+
+
+   
+    
+
+
+</script>
+</html>

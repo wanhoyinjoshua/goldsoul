@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>log your hours</title>
     <link rel="icon" href="https://lh3.googleusercontent.com/Wn2Ntl6O-swblFPngE9xz-kqnkEME1Bo8ZeJxvwKcuIef3Ief2Nf8f5tKv-q126tHWvP=s85">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
 </head>
 <style>
 .clear{
@@ -32,6 +32,69 @@
     max-width: 90%;
     margin:0 auto;
 }
+.autocomplete{
+    display: block;
+    background-color: white;
+}
+.autoncompletebox{
+    width: 50%;
+}
+.inputbox{
+    
+}
+.auto{
+    cursor: pointer;
+}
+.auto:hover{
+    background-color: gray;
+}
+
+.circlebutton{
+    background-color: white;
+    border: black;
+    border-width: 2px;
+    border-style: solid;
+
+    position: relative;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    
+
+    
+   
+
+}
+.deletebutton{
+    
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 20px;
+    height: 20px;
+    
+    background-position: center;
+    background-size: cover;
+    
+}
+.deletebutton :hover{
+    cursor: pointer;
+}
+.fa-trash-alt:hover{
+    cursor: pointer;
+}
+#selectedresident{
+    display: block;
+    background-color: honeydew;
+    width: 500px;
+    height: 100%;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    
+
+}
 @media only screen and (max-width: 450px) {
 
     .card{
@@ -51,8 +114,24 @@
         log your hours <%=user.name%> 
     <a href="/profile" >go back to profile </a><br>
 
-    <form onSubmit="return confirm('Are you sure you wish to add?');" action="/loghours" method="POST" id="form1">
-        <div class="clear">
+    <div class="loghouroption">
+        <span>What did you do?</span>
+        <input type="radio" name="worktype" id="residentwork">
+        <label for="huey" >Residents</label>
+        <input type="radio" name="worktype" id="adminwork">
+        <label for="huey">others</label>
+    </div>
+
+    <form id="adminform" style="display: none;">
+
+        <label for="username">Your name </label>
+            <input  type="text" id="username" name="username"   ><br>
+
+
+    </form>
+
+    <form onSubmit="return confirm('Are you sure you wish to add?');" action="/loghours" method="POST" id="form1" style="display: none;">
+        <div class="clea">
 
             <label for="username">Your name </label>
             <input  type="text" id="username" name="username" value=<%= user.name.replace(/ /g, `&nbsp`) %>  required><br>
@@ -62,32 +141,73 @@
             <input type="text" id="date" name="date" value=<%= date %>  required><br>
             <label for="date">year </label>
             <input type="text" id="year" name="year" value=<%= year %>  required><br>
+            <label for="entryno">entryno </label>
+            <input type="no" id="entryno" name="entryno"  required><br>
 
         </div>
-      
+
+        <div class="autoncompletebox">
+
+            <label for="resident">select a resident </label> <br><span>click here to create one if you can find it</span><br>
+            <div class="inputbox">
+
+                <input style="width:100%"type="text" id="resident" name="resident"  required>
+                
+
+            </div>
+            
+           
+            <div class="autocomplete" id="autocompletefill">
+                
+            </div>
+
+        </div>
+
+        <div id="selectedresident">
+            
+
+        </div>
+
+
+        
 
         <label for="milano">No of hours in milano</label>
-        <input type="number" id="milano" name="milano" min="0" min=0 step="any" required><br>
+        <input type="number" id="milano" name="milano" min="0" min=0 step="any" value="0" required><br>
         
 
         <label for="quantity">No of hours in serrento</label>
-        <input type="number" id="serrento" name="serrento" min="0"min=0 step="any" required><br>
+        <input type="number" id="serrento" name="serrento" min="0"min=0 step="any" value="0" required><br>
 
         <label for="quantity">No of hours in toscano</label>
-        <input type="number" id="toscano" name="toscano" min="0" min=0 step="any" required ><br>
+        <input type="number" id="toscano" name="toscano" min="0" min=0 step="any" value="0" required ><br>
 
         <label for="quantity">other</label><br>
-        <input type="number" id="other" name="other" min="0" min=0 step="any" required ><br>
+        <input type="number" id="other" name="other" min="0" min=0 step="any"  value="0"required ><br>
 
         <div class="description">
             <label for="descriptionthings">Who did you visit today?</label><br>
             <textarea  placeholder="e.g lucy , phyllis" id="descriptionpeople" name="descriptionpeople" rows="4" cols="50" required></textarea><br>
 
+            <label for="activitygenre">Choose an activity genre:</label>
+                <select id="activitygenre" name="activitygenre">
+                   
+                </select>
+                <br>
+
             <label for="descriptionthings">What did you do with them today?</label><br>
             <textarea  placeholder="e.g i did something and lucy felt great " id="descriptionthings" name="descriptionthings" rows="4" cols="50" required></textarea><br>
 
+            <label for="outcome">outcome:</label>
+            <select id="outcome" name="outcome">
+               
+            </select>
+            <br>
+
             <label for="descriptionthings">What is the outcome for the resident ?</label><br>
             <textarea  placeholder="e.g they liked it and they all smiled  " id="descriptionoutcome" name="descriptionoutcome" rows="4" cols="50" required></textarea>
+            <br>
+            <label for="time">How many hours did you do it with them?</label><br>
+            <input type="number"   id="time" name="time"  required></input>
             
 
         </div>
@@ -98,13 +218,244 @@
 <input type="date" id="date" name="date" required>
 
     </form>
-    <button   type="submit" form="form1" value="Submit">Submit</button>
+    <div   id="residentsubmit"type="submit" style="display: none;">Submit resident</div>
+    <button   id="adminsubmit"type="submit" form="adminform" value="Submit" style="display: none;">Submit admin</button>
 </div>
     </div>
     
 </body>
 <script>
 
+    var testlist=["patricia(toscano)","maria(toscano)","antonio(toscano)","lucy(toscano)","bob(toscano)"]
+    var fil=[]
+    var selectedresident= document.getElementById("selectedresident")
+    
+    var p=  document.getElementById("resident")
+
+    var autocompletedom= document.getElementById("autocompletefill")
+
+    var deletebutton = document.getElementsByClassName("deletebutton");
+    console.log(deletebutton)
+    var residentwork= document.getElementById("residentwork");
+    var adminwork=document.getElementById("adminwork");
+    var residentbutton=document.getElementById("residentsubmit");
+    var adminbutton=document.getElementById("adminsubmit");
+    var adminform = document.getElementById("adminform");
+
+    residentbutton.addEventListener("click",function(){
+        //do fucntion
+        console.log("hit")
+       var residentarray =Array.from(document.getElementsByClassName("circlebutton"),x=>x.innerText)
+       
+       var descriptionpeople= document.getElementById("descriptionpeople");
+
+       descriptionpeople.value=residentarray
+       //generate unique code
+       
+       var d = new Date();
+        var entryno = d.getTime();
+        var entrynofield= document.getElementById("entryno");
+        entrynofield.value=entryno
+
+        //idenity which facility it is in
+        const regextoscano = new RegExp('toscano');
+        const regexmilano = new RegExp('milano');
+        const regexserrento = new RegExp('serrento');
+        if(regextoscano.test(descriptionpeople.value)){
+            console.log("matchtoscano")
+            var time = document.getElementById("time");
+            var toscanohours=document.getElementById("toscano");
+            toscanohours.value=time.value
+
+
+        }
+        if(regexmilano.test(descriptionpeople.value)){
+            console.log("matchmilano")
+            var time = document.getElementById("time");
+            var milanohours=document.getElementById("milano");
+            milanohours.value=time.value
+
+
+        }
+        if(regexserrento.test(descriptionpeople.value)){
+            console.log("matchtoscano")
+            var time = document.getElementById("time");
+            var serrentohours=document.getElementById("serrento");
+            serrentohours.value=time.value
+
+
+        }
+        
+
+
+        //submit form 
+        document.getElementById("form1").submit();
+        
+
+    })
+
+    console.log(residentwork.checked)
+    document.getElementById("adminwork").addEventListener('click',function(){
+    
+           adminform.style.display="block";
+           var residentform= document.getElementById("form1")
+           residentform.style.display="none";
+           
+           
+           residentbutton.style.display="none"
+           
+           adminsubmit.style.display="block"
+   });
+
+   document.getElementById("residentwork").addEventListener('click',function(){
+    var residentform = document.getElementById("form1");
+            residentform.style.display="block";
+            adminform.style.display="none";
+            
+            residentbutton.style.display="block"
+         
+           adminsubmit.style.display="none"
+   });
+   
+  
+
+   
+
+
+    
+
+
+    
+
+
+    
+
+  p.addEventListener("input", 
+  
+  function(e){
+
+    var patt = new RegExp(`${e.target.value}`);
+    //reinitiaalize array
+    fil.splice(0, fil.length)
+    //reinitialize dom 
+    document.querySelectorAll('.auto').forEach(e => e.remove());
+
+    
+   console.log("new")
+
+    for(i=0;i<testlist.length;i++){
+        if (patt.test(testlist[i])&& e.target.value!="")
+        {
+            fil.push(testlist[i])
+            console.log("pushed")
+
+            
+
+
+
+        }
+        else{
+            
+           
+        }
+    }
+
+    console.log(fil)
+  
+    
+    for(i=0;i<fil.length;i++){
+
+        var option = document.createElement("li");
+        option.classList.add("auto")
+        option.innerText=fil[i]
+
+        
+        
+        var optiondom= autocompletedom.appendChild(option);
+        
+        option.addEventListener("click",function(e){
+            p.value = ""
+            fil.splice(0, fil.length)
+            document.querySelectorAll('.auto').forEach(e => e.remove());
+            var residentcircle= document.createElement("span")
+            residentcircle.innerText=e.target.innerText;
+            residentcircle.classList.add("circlebutton")
+            var deletebutton =document.createElement("i");
+            deletebutton.classList.add("fas");
+
+            deletebutton.classList.add("fa-trash-alt");
+            deletebutton.classList.add("deletebutton");
+            deletebutton.addEventListener("click",(e)=>{
+                //remove element 
+                e.target.parentNode.remove()
+                
+                console.log("deleted")
+            
+            })
+            
+            residentcircle.appendChild(deletebutton)
+            //make sure there is no duplicate 
+
+            var residentarray =Array.from(document.getElementsByClassName("circlebutton"),x=>x.innerText)
+            for (i=0;i<residentarray.length;i++){
+                if(residentcircle.innerText.localeCompare(residentarray[i])==0){
+                    alert("the same resident has already been selected bitch")
+                    return
+
+
+                }
+            }
+
+            selectedresident.appendChild(residentcircle)
+
+
+        })
+        
+
+    }
+        
+
+       
+
+    
+
+    
+
+
+  }
+  
+  
+  
+  
+  )
+
+
+  var activitygenre= document.getElementById("activitygenre");
+  var activitylist=["sensory stimulation","walking","1on1 talking","crafts","card games","music","story","cooking","java"]
+  for (i=0;i<activitylist.length;i++) {      
+         let activityOption = document.createElement('option');          
+         activityOption.text = activitylist[i];      
+         activityOption.value = activitylist[i];        
+         activitygenre.add(activityOption);      
+           
+       }
+
+
+       var outcome= document.getElementById("outcome");
+  var outcomelist=["positive","neutral","negative"]
+  for (i=0;i<outcomelist.length;i++) {      
+         let outcomeOption = document.createElement('option');          
+         outcomeOption.text = outcomelist[i];      
+         outcomeOption.value = outcomelist[i];        
+         outcome.add(outcomeOption);      
+           
+       }
+
+
+
+   
+
 
 </script>
+
 </html>
