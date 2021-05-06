@@ -82,18 +82,55 @@ app.get('/',function(req,res){
             let uniqueactivity = [...new Set(activitylist)];
             console.log(uniqueactivity)
 
-            class residentactivitygenre{
-                constructor(activities) {
-                    
-                    this.activities = activities;
-                  }
-            }
+            
+            
 
             const detailed= uniqueactivity.map(x=>doc.filter(doc => doc.activitygenre ==x))
+            console.log(detailed[0])
+            console.log(uniqueactivity)
+            //loop thru the activitylist and add active passive and refuse
+            //need one for filtered worker , one for gold soul, one for each 
+            //below is unfiltered
+            /*
+            var finaldatalist=[]
+            for(i=0;i<uniqueactivity.length;i++){
+                var analyzeddata= detailed[i];
+                var active =0;
+                var passive=0;
+                var refused=0;
+                var eachactivitydata= []
+                eachactivitydata.push(uniqueactivity[i])
+                for(j=0;j<detailed[i].length;j++){
+                    if(detailed[i][j].outcomegenre=="positive"){
+                        //add active var with time
+                        active += detailed[i][j].time
+                    }
+                    if(detailed[i][j].outcomegenre=="negative"){
+                        //add active var with time
+                        passive += detailed[i][j].time
+                    }
+                    if(detailed[i][j].outcomegenre=="neutral"){
+                        //add active var with time
+                        refused += detailed[i][j].time
+                    }
+                }
+                eachactivitydata.push(active,passive,refused)
+                finaldatalist.push(eachactivitydata)
+            }
+            console.log(finaldatalist)
+            console.log(detailed)
+            //finaldatalist and detailed list has the same index
+            */
+            //jsonsify everything
+            let detailed1 = JSON.stringify(detailed)
+          
+            let uniqueactivity1=JSON.stringify(uniqueactivity)
+            res.render('residentoutcome',{detailed1 ,uniqueactivity1})
+
 
             
 
-            console.log(detailed)
+            
 
             
             

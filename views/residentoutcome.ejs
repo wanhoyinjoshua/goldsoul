@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    td {
+                        text-align: center;
+                      }
+    
+    #residentname{
+        font-size: 50px;
+    }
+    
+    #green{
+        background-color: greenyellow;
+    }
+    .green{
+        background-color: greenyellow;
+
+    }
+    .orange {
+        background-color: rgb(255, 206, 44);
+    }
+
+    #yellow{
+        background-color: rgb(255, 206, 44);
+    
+    }
+    #red{
+        background-color: red;
+    
+    }
+    .red{
+        background-color: red;
+    
+    }
+    
+    body{
+        display: grid;
+        grid-template-columns:  50% 50%;
+    }
+    #carestaff{
+        background-color: seashell;
+
+    }
+    </style>
+   
+        
+        <body>
+            <div id="data"style="display:none">
+                <%=detailed1%> 
+                <% var detailedbrowser =detailed1 %>
+                <%=uniqueactivity1%> 
+                <% var uniqueactivity1 =uniqueactivity1%>
+
+            </div>
+       
+            <div class="lefthandside">
+                <div class="filter">
+                    <div class="people">
+                        
+                        <button id="carestaff" onclick="carestaff()">Carestaff</button>
+                        <button id="goldsoul" onclick="goldsoul()">Goldsoul</button>
+                        <button id="all" onclick="allpeople()">All people</button>
+        
+                    </div>
+                    <div class="time">
+                        <button id="alltime" onclick="timeselectedall()">All</button>
+                        <select name="month" id="year" onclick="yeardropdownselect()">
+                            <option id="monthdefault"selected="selected"></option>
+                            <option value=2019>2019</option>
+                            <option value=2020>2020</option>
+                            <option value=2021>2021</option>
+              
+                          </select>
+                        
+                        <select name="month" id="month"onclick="monthdropdownselect()">
+                            <option id="yeardefault"selected="selected"></option>
+                            <option value=1>Jan</option>
+                            <option value=2>Feb</option>
+                            <option value=3>march</option>
+                            <option value=4>april</option>
+                            <option value=5>may</option>
+                            <option value=6>june</option>
+                            <option value=7>july</option>
+                            <option value=8>august</option>
+                            <option value=9>september</option>
+                            <option value=10>october</option>
+                            <option value=11>november</option>
+                            <option value=12>december</option>
+                          </select>
+        
+                    </div>
+
+                    <button id="filtersubmit" onclick="filteronclick()">
+                        apply filter
+                    </button>
+                   
+                    
+                </div>
+                
+                <div id="querycontent">
+                    <div id="residentname">Lucy(toscano)</div>
+                    <div id="hoursspendonthem"></div>
+                    <div id="hoursonactivitygenre"></div>
+                    <div id="carestaffactivity">
+                        carestaff activity
+                        <table id="datatoappend"style="width:80%">
+                            <tr>
+                              <th>activity</th>
+                              <th>actively engaged</th>
+                              <th>Passively engaged</th>
+                              <th>refused</th>
+                            </tr>
+        
+                        
+                            
+                       
+                          </table>
+        
+                    </div>
+                    
+        
+                </div>
+    
+            </div>
+    
+    
+            <div id="right"class="righthandside">
+    
+                green tails 
+                <section >
+                    <table id="greendetailstablestyle"width:100%">
+                        <tr id="greendetails">
+                            <th>Date</th>
+                            <th>activity description</th>
+                            <th>Outcome genere</th>
+                            <th>Outcome description</th>
+                            <th>Hours spent</th>
+                          </tr>
+    
+                         
+                           
+    
+    
+                    </table>
+    
+    
+                </section>
+                
+            </div>
+            
+            
+        
+        
+    </body>
+    <script>
+        var green=document.getElementById("green");
+        var yellow=document.getElementById("yellow");
+        var red=document.getElementById("red");
+        var right =document.getElementById("right")
+
+       //this is where you caculate the thing//
+       //unfiltered version
+       //below is all the info unfiltered activity genre , all activities under the resident with the same genre
+       //need to generate different versions of the data --gold soul(each student), staff, month, year
+        var detailedbrowser =  '<%-detailedbrowser%>'
+    var detailedbrowser=JSON.parse(detailedbrowser)
+    console.log(detailedbrowser)
+    //below is the unique activity list of the residetn , dependent on gold soul, staff, month and year need ot create filters
+    var uniqueactivity1 =  '<%-uniqueactivity1%>'
+    var uniqueactivity1=JSON.parse(uniqueactivity1)
+    console.log(uniqueactivity1)
+    //this is the default state without filter aka all data of the patient , eveytime by evryone
+function generateactivitylsitdata(uniqueactivity1,detailedbrowser){
+    var finaldatalist=[]
+            for(i=0;i<uniqueactivity1.length;i++){
+                var analyzeddata= detailedbrowser[i];
+                var active =0;
+                var passive=0;
+                var refused=0;
+                var eachactivitydata= []
+                eachactivitydata.push(uniqueactivity1[i])
+                for(j=0;j<detailedbrowser[i].length;j++){
+                    if(detailedbrowser[i][j].outcomegenre=="positive"){
+                        //add active var with time
+                        active += detailedbrowser[i][j].time
+                    }
+                    if(detailedbrowser[i][j].outcomegenre=="negative"){
+                        //add active var with time
+                        passive += detailedbrowser[i][j].time
+                    }
+                    if(detailedbrowser[i][j].outcomegenre=="neutral"){
+                        //add active var with time
+                        refused += detailedbrowser[i][j].time
+                    }
+                }
+                eachactivitydata.push(active,passive,refused)
+                finaldatalist.push(eachactivitydata)
+            }
+
+            return finaldatalist
+        
+            
+
+}
+    var finaldatalist= generateactivitylsitdata(uniqueactivity1,detailedbrowser);
+
+//APPLY FILTER OF YEAR //TRANSDFORM DETAILED BROWSER apply concept of await async
+function filter (month,year,people){
+
+    if(people=="allpeople"&&month==0&&year==0){
+        //default
+        console.log("inbitch")
+        var masterlist=[] 
+for(i=0;i<detailedbrowser.length;i++){
+    var activitysublist =[]
+    
+    for(j=0;j<detailedbrowser[i].length;j++){
+        
+        
+        
+            activitysublist.push(detailedbrowser[i][j]);
+            console.log(detailedbrowser[i][j])
+        
+        
+
+    }
+    masterlist.push(activitysublist)
+}
+return masterlist
+    }
+    if (people=="allpeople"){
+        //only filter time 
+        console.log("inbitchagain")
+        var masterlist=[] 
+for(i=0;i<detailedbrowser.length;i++){
+    var activitysublist =[]
+    
+    for(j=0;j<detailedbrowser[i].length;j++){
+        
+        
+        if(detailedbrowser[i][j].month==month&&detailedbrowser[i][j].year==year){
+            activitysublist.push(detailedbrowser[i][j]);
+            console.log(detailedbrowser[i][j])
+        }
+        
+
+    }
+    masterlist.push(activitysublist)
+}
+return masterlist
+    }
+    if(month==0){
+        //only filter people
+        var masterlist=[] 
+for(i=0;i<detailedbrowser.length;i++){
+    var activitysublist =[]
+    
+    for(j=0;j<detailedbrowser[i].length;j++){
+        
+        
+        if(detailedbrowser[i][j].whodidthis==people){
+            activitysublist.push(detailedbrowser[i][j]);
+            console.log(detailedbrowser[i][j])
+        }
+        
+
+    }
+    masterlist.push(activitysublist)
+}
+    }
+   
+    else{
+        var masterlist=[] 
+for(i=0;i<detailedbrowser.length;i++){
+    var activitysublist =[]
+    
+    for(j=0;j<detailedbrowser[i].length;j++){
+        
+        
+        if(detailedbrowser[i][j].month==month&&detailedbrowser[i][j].year==year&&detailedbrowser[i][j].whodidthis==people){
+            activitysublist.push(detailedbrowser[i][j]);
+            console.log(detailedbrowser[i][j])
+        }
+        
+
+    }
+    masterlist.push(activitysublist)
+}
+
+    }
+
+   
+return masterlist
+
+
+}
+var filteredactivity= filter(5,2021,"wan joshua")
+//now you have the filtered activity list , no you need to be able to craete a unique activit list based in that 
+var filteredactivitylist=[]
+for(i=0;i<filteredactivity.length;i++){
+    if(filteredactivity[i][0]!=""){
+
+        filteredactivitylist.push(filteredactivity[i][0].activitygenre)
+
+    }
+
+}
+var filteredstats= generateactivitylsitdata(filteredactivitylist,filteredactivity)
+console.log(filteredstats)
+console.log(filteredactivity)
+//now you have the filtered activity list , next step is to generate the numbers with twpo arrays like before
+//above is where you do the calculation
+function displayeverything(finaldatalist,detailedbrowser){
+    var bigtable= document.getElementById("datatoappend");
+    //append element dynamically
+    for(i=0;i<finaldatalist.length;i++){
+        var tr= document.createElement("tr")
+        tr.setAttribute('id',`${i}`)
+        tr.classList.add("dynamicpop")
+        if(finaldatalist[i][1]-finaldatalist[i][2]>0&&finaldatalist[i][3]==0){
+            tr.classList.add("green")
+        }
+        if(finaldatalist[i][1]-finaldatalist[i][2]<0&&finaldatalist[i][3]==0){
+            tr.classList.add("orange")
+        }
+        if(finaldatalist[i][3]>0){
+            tr.classList.add("red")
+        }
+        for (j=0;j<finaldatalist[i].length;j++){
+            th = document.createElement("th");
+            th.innerText= finaldatalist[i][j]
+            tr.appendChild(th)
+        }
+        console.log(tr)
+        
+        tr.addEventListener("click",
+        function(e)
+        {
+            var pop2= document.getElementsByClassName("detailspop")
+    var newpop2 = Array.prototype.slice.call( pop2 )
+    newpop2.forEach(element => element.remove());
+            var detailsiwant =detailedbrowser[e.target.parentElement.getAttribute("id")];
+            console.log(detailsiwant)
+           var right = document.getElementById("greendetails");
+           console.log(right)
+           console.log(detailsiwant.length)
+           for (i=0;i<detailsiwant.length;i++){
+               var tr = document.createElement("tr");
+               var usefuldata= []
+               tr.classList.add("detailspop")
+               usefuldata.push(detailsiwant[i].date,detailsiwant[i].activitydescription,detailsiwant[i].outcomegenre,detailsiwant[i].outcomedescription,detailsiwant[i].time)
+               console.log(usefuldata)
+               for(j=0;j<usefuldata.length;j++){
+                   var th = document.createElement("th");
+                   th.innerText=usefuldata[j];
+                   tr.appendChild(th)
+                   console.log(tr)
+                   
+
+               }
+               console.log(tr)
+               right.parentElement.appendChild(tr)
+
+
+               
+
+              
+           }
+           
+
+    
+    
+    
+    })
+        bigtable.appendChild(tr)
+       
+
+
+
+
+    }
+
+
+}
+//below is default version
+displayeverything(finaldatalist,detailedbrowser)
+
+//below is filtered version
+
+
+
+//above is to create the table dynamically need to create a function
+//onclick to trigger the function 
+function filteronclick(){
+
+    var pop= document.getElementsByClassName("dynamicpop")
+    var newpop = Array.prototype.slice.call( pop )
+    newpop.forEach(element => element.remove());
+    //get the filter info by looping thru each button to get the value , month year people
+    var carstaff= document.getElementById("carestaff");
+    var goldsoul= document.getElementById("goldsoul");
+    var allpeople = document.getElementById("all")
+    var alltime= document.getElementById("alltime")
+    var yearvalue = document.getElementById("year").value;
+    var monthvalue = document.getElementById("month").value;
+    if(alltime.style.backgroundColor=="red"){
+        monthvalue=0
+        yearvalue=0
+    }
+
+    if(carstaff.style.backgroundColor=="red"){var people="carestaff"}
+    if(goldsoul.style.backgroundColor=="red"){var people="goldsoul"}
+    if(allpeople.style.backgroundColor=="red"){var people="allpeople"}
+    console.log(monthvalue,yearvalue,people)
+
+    var filteredactivity= filter(monthvalue,yearvalue,people)
+    console.log(filteredactivity[0][0].activitygenre)
+    console.log(filteredactivity)
+    const newfilteredarray = filteredactivity.filter(x=> x.length>0)
+    console.log(newfilteredarray)
+//now you have the filtered activity list , no you need to be able to craete a unique activit list based in that 
+var filteredactivitylist=[]
+for(i=0;i<newfilteredarray.length;i++){
+
+    
+    if(newfilteredarray[i][0]!=[]){
+        
+
+        filteredactivitylist.push(newfilteredarray[i][0].activitygenre)
+
+    }
+
+}
+var filteredstats= generateactivitylsitdata(filteredactivitylist,newfilteredarray)
+console.log(filteredstats)
+
+displayeverything(filteredstats,newfilteredarray)
+
+
+}
+
+
+
+//below is how you generate the details on click 
+       
+    
+       
+        var hoursonresident = document.getElementById("hoursspendonthem");
+        console.log(hoursonresident)
+        var hoursonactivitygenre= document.getElementById("hoursonactivitygenre")
+        var carstaff= document.getElementById("carestaff");
+    var goldsoul1= document.getElementById("goldsoul");
+    var allpeople1 = document.getElementById("all")
+    var alltime= document.getElementById("alltime")
+    var monthdropdown = document.getElementById("month")
+    var yeardropdown = document.getElementById("year")
+    var monthdefault1 = document.getElementById("monthdefault")
+    var yeardefault1=document.getElementById("yeardefault")
+
+    
+        function allpeople(){
+            
+            hoursonresident.innerText="hours spent on this resident by both gold soul and carestaff is 120 hours this (month/variabe)"
+            carstaff.style.backgroundColor="white"
+            goldsoul1.style.backgroundColor="white"
+            allpeople1.style.backgroundColor="red"
+        }
+        function carestaff(){
+            hoursonresident.innerText="hours spent on this resident by carestaff is 100 hours this (month/variabe)"
+            hoursonactivitygenre.innerText=""
+            carstaff.style.backgroundColor="red"
+            goldsoul1.style.backgroundColor="white"
+            allpeople1.style.backgroundColor="white"
+
+    
+    
+    }
+        function goldsoul(){
+            hoursonresident.innerText="hours spent on this resident by goldsoul is 20 hours this (month/variabe)"
+            carstaff.style.backgroundColor="white"
+            goldsoul1.style.backgroundColor="red"
+            allpeople1.style.backgroundColor="white"
+        }
+
+        function timeselectedall(){
+            alltime.style.backgroundColor="red"
+           console.log(monthdropdown.value) 
+           monthdefault1.defaultSelected = true;
+           yeardefault1.defaultSelected = true;
+           console.log(yeardropdown.value)
+
+        }
+
+        function yeardropdownselect(){
+            alltime.style.backgroundColor="white"
+        }
+        function monthdropdownselect(){
+            alltime.style.backgroundColor="white"
+        }
+    
+    
+    
+    
+        var test= ["red","blue","red","green","yellow","zebra","lll","lmao","fuckyou","fuckyou","blue","yellow"]
+        var activitylist=[]
+        let uniqueChars = [...new Set(test)];
+                
+    
+             
+    
+                console.log(uniqueChars)
+    
+       
+    
+    </script>
+</html>
